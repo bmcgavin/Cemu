@@ -431,9 +431,7 @@ private fun EmulationSurfaces(
     val mainSurfaceDimensions by viewModel.mainSurfaceDimensions.collectAsState()
     val padSurfaceDimensions by viewModel.padSurfaceDimensions.collectAsState()
 
-    if (gamePadPosition == null) {
-        return
-    }
+    val currentGamePadPosition = gamePadPosition ?: return
 
     val padDisplay = if (activity != null) rememberPadDisplay(activity) else null
     val isPadVisibleEffective = sideMenuState.isPadVisible && isEmulationInitialized
@@ -485,7 +483,7 @@ private fun EmulationSurfaces(
         onDispose { padPresentation.dismiss() }
     }
 
-    LinearLayout(gamePadPosition) { itemModifier ->
+    LinearLayout(currentGamePadPosition) { itemModifier ->
         EmulationSurface(
             modifier = itemModifier,
             holderCallback = viewModel.mainHolderCallback,
